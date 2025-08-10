@@ -9,7 +9,8 @@
 <div class="container mt-5">
     <h1>Minhas Tarefas</h1>
     <hr/>
-    
+
+    <a href="/tarefas/nova" class="btn btn-primary mb-3">Nova Tarefa</a>
 
     <table class="table table-striped">
         <thead>
@@ -17,6 +18,7 @@
             <th>Descrição</th>
             <th>Concluída</th>
             <th>Data de Criação</th>
+            <th>Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +26,21 @@
             <td th:text="${tarefa.descricao}">Comprar pão</td>
             <td th:text="${tarefa.concluida} ? 'Sim' : 'Não'">Não</td>
             <td th:text="${#temporals.format(tarefa.dataCriacao, 'dd/MM/yyyy HH:mm')}">09/08/2025 21:49</td>
+
+            <td>
+                <div class="d-flex">
+                    <form th:action="@{/tarefas/concluir/{id}(id=${tarefa.id})}" method="post" class="me-2">
+                        <button type="submit"
+                                th:class="${tarefa.concluida} ? 'btn btn-warning btn-sm' : 'btn btn-success btn-sm'"
+                                th:text="${tarefa.concluida} ? 'Reabrir' : 'Concluir'">
+                        </button>
+                    </form>
+
+                    <form th:action="@{/tarefas/excluir/{id}(id=${tarefa.id})}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
